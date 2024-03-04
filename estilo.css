@@ -1,0 +1,40 @@
+body{
+    background-color: #fff;
+    border-bottom: 1px solid #eaecef;
+    max-width: 1000px;
+    margin: auto;
+}
+
+header, main{
+    margin: 0 1em;
+}
+
+#indice ol{
+    list-style-type: disc;
+    padding-left: 30px;
+}
+
+a{
+    color: #0366d6;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+h1, h2{
+    border-bottom: 1px solid #eaecef;
+}
+
+h1{
+    margin-top: 1em;
+}
+
+h2{
+    margin-top: 2em;
+}
+
+main > section:last-child{
+    min-height: 100vh;
+}
