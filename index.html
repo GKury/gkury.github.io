@@ -87,7 +87,31 @@
             <h2 class="tituloAtvd">Atividade 3 (Formatos de imagem)</h2>
             <a href="#indice">Índice de atividades</a>
 
-            <p class="resposta"></p>
+            <p class="resposta">O formato de imagem/arquivo PNG foi o escolhido, pois sempre gostei deste formato que possui “fundo” transparente ao invés de branco, ou qualquer outra cor. Este formato consiste em uma assinatura de identificação de 8 bytes, seguido por mais três blocos (chunks) de informação. Cada bloco está de acordo com um tipo especificamente definido de estrutura. Tais blocos carregam suas próprias identificações referentes ao seu formato interno, e são lidos de maneira sequencial, do início ao fim do arquivo/fluxo de dados. Por a leitura ser sequencial, não é necessário procurar por diferentes partes do arquivo utilizando valores de deslocamento (offset values). Isso também torna o PNG (e formatos similares) ideal para uso na rede (network) e para protocolos de transmissão de informação. Apesar de ser um formato de arquivo, é mais preciso pensar no PNG como um fluxo de dados que é capturado e armazenado num arquivo.
+            </p>
+
+            <p class="resposta">O PNG define 4 blocos padrão, chamados de blocos críticos (critical chunks), que deve ser aceito por todos leitores e escritores de PNG. Estes blocos são:</p>
+
+            <ol>
+                <li>The header chunk (IHDR) - Este bloco contém informações básicas sobre os dados da imagem, e deve aparecer como o primeiro bloco, e só pode haver um bloco deste tipo num fluxo de dados PNG.</li>
+                <li>The palette chunk (PLTE) - Este bloco armazena os dados do mapa de cores (colormap) associados ao dados da imagem. Só esta presente se a imagem usa uma paleta de cores (color palette), e deve aparecer antes do bloco “image data chunk (IDAT)”.
+                </li>
+                <li>The image data chunk (IDAT) - Este bloco armazena os dados da imagem em si, e múltiplos blocos deste tipo podem aparecer em um único fluxo de dados, e devem ser armazenados em ordem contígua.
+                </li>
+                <li>The image trailer chunk (lEND)  - Este bloco deve ser o último, pois marca o fim do arquivo PNG ou o fim do fluxo de dados.
+                </li>
+            </ol>
+
+            <p class="resposta">Todos esses blocos devem aparecer em todo fluxo de dados de um PNG, exceto o “The palette chunk (PLTE)”.</p>
+            <p class="resposta">Blocos opcionais, chamados de blocos acessórios/opcionais (ancillary chunks), podem ser ignorados por leitores de arquivos PNG, e não devem ser escritos por escritores de arquivos PNG. Porém, ao desconsiderar estes blocos opcionais, o leitor PNG pode não conseguir renderizar a imagem de maneira apropriada, fazendo com que a imagem apareça muito clara, ou muito escura, ou de alguma diferente da concepção original. Por isso, é recomendado usar softwares capazes de interpretar blocos opcionais padrões, em especial o bloco relacionado ao gama (Image Gamma chunk).
+            </p>
+            <p class="resposta">Juntos, os blocos críticos e opcionais são chamados de blocos padrões (standard chunks). Os blocos adicionais são chamados de blocos públicos de propósito especial (special-purpose public chunks), que são implementados em menor quantidade para aplicações específicas. A lista destes blocos públicos de propósito especial tende a crescer com o tempo. Também podem haver blocos privados, para armazenar dados que não precisam ser interpretados por outras aplicações. 
+            </p>
+
+            <h3>Referência</h3>
+            <p class="resposta">MURRAY, James D.; vanRyper, William. Encyclopedia of Graphics File Formats. Sebastopol: O'Reilly & Associates, 1994.</p>
+                
+                
         </section>
 
 
