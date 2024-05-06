@@ -23,6 +23,9 @@
                 <li><a href="#atvd3">Atividade 3 (Formatos de imagem)</a></li>
                 <li><a href="#atvd4">Atividade 4 (GitHub Classroom - AP1)</a></li>
                 <li><a href="#atvd5">Atividade 5 (GitHub Classroom - AP2)</a></li>
+                <li><a href="#atvd6">Atividade 6 (GitHub Classroom - AP3)</a></li>
+                <li><a href="#atvd7">Atividade 7 (GitHub Classroom - AP4)</a></li>
+                <li><a href="#atvd8">Atividade 8 (APIs gráficas)</a></li>
             </ol>
         </nav>
     </header>
@@ -128,6 +131,238 @@
             <a href="#indice">Índice de atividades</a>
 
             <p class="resposta"><a href="https://github.com/profkishimoto-classroom/compvis07g-2024-1-ap2-gkf" target="_blank">Clique aqui para ver no GitHub</a></p>
+        </section>
+
+        <section id="atvd6">
+            <h2 class="tituloAtvd">Atividade 6 (GitHub Classroom - AP3)</h2>
+            <a href="#indice">Índice de atividades</a>
+
+            <p class="resposta"></p>
+        </section>
+
+        <section id="atvd7">
+            <h2 class="tituloAtvd">Atividade 7 (GitHub Classroom - AP4)</h2>
+            <a href="#indice">Índice de atividades</a>
+
+            <p class="resposta"><a href="https://github.com/profkishimoto-classroom/compvis07g-2024-1-ap4-gkf" target="_blank">Clique aqui para ver no GitHub</a></p>
+        </section>
+
+        <section id="atvd8">
+            <h2 class="tituloAtvd">Atividade 8 (APIs gráficas)</h2>
+            <a href="#indice">Índice de atividades</a>
+
+            <p class="resposta">A API OpenGL é definida como "um programa de interface para hardware gráfico". Na verdade, OpenGL é uma biblioteca de rotinas gráficas e de modelagem, bidimensional (2D) e tridimensional (3D), extremamente portável e rápida. Seu uso é semelhante ao de uma biblioteca C, uma vez que fornece uma série de funcionalidades.<sup>1</sup> A maior vantagem desta ferramenta é sua rapidez e sua disponibilidade em sistemas Windows e Linux, pois o concorrente DirectX está presenta apenas no Windows.<sup>2</sup></p>
+
+            <div class="dFlex">
+                <div>
+                    <p class="resposta">
+                        A imagem a direita é o Diagrama do Pipeline de Renderização. As caixas azuis são o estágios de shaders programáveis. O Pipeline de Renderização é iniciado quando a "rendering operation" é realizada/performada. "Rendering operations" exigem a presença de um objeto de matriz de vértices definido corretamente, e um "Program Object" ,ou "Program Pipeline Object", vinculado (linked) que fornece os shaders para os estágios programávies do Pipeline.<sup>3</sup> 
+                    </p>
+                    <ol>
+                        <li>Vertex Processing</li>
+                        <ol>
+                            <li>Cada "vertex" retirado dos arrays de vertex (conforme definido pelo VAO) é acionado por um(acted upon by a) Vertex Shader. Cada Vertex na stream (fluxo) é processado e se torna um output vertex.</li>
+                            <li>Primitiva opcional "tessellation stages"</li>
+                            <li>Primitiva opcional de processamento "Geometry Shader". O output é uma sequência de primitivas</li>
+                        </ol>
+                        <li>"Vertex Post-Processing", os outputs do estágio anterior são ajustados ou transportados para locais diferentes</li>
+                        <ol>
+                            <li>Transformation Feedback</li>
+                            <li>Primitive Assembly</li>
+                            <li>"Clipping" primitivo, "perspective divide", "viewport transform to window space"</li>
+                        </ol>
+                        <li>"Scan Conversion" e "parameter interpolation" primitivo, que gera um número de "Fragments"</li>
+                        <li>Um "fragment Shader" processa cada "fragment". Cada "fragment" gera um número de outputs</li>
+                        <li>"Per-Sample Operations, incluindo, mas não limitado a:</li>
+                        <ol>
+                            <li>Scissor Test</li>
+                            <li>Stencil Test</li>
+                            <li>Depth Test</li>
+                            <li>Blending</li>
+                            <li>Logical Operation</li>
+                            <li>Write Mask</li>
+                        </ol>
+                    </ol>
+
+                    <p class="resposta">Para mais informações, <a href="https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview" target="_blank">acesse o link</a>.<sup>3</sup></p>
+                </div>
+                <img src="RenderingPipeline.png" alt="Imagem da Pipeline do OpenGl">
+            </div>
+
+            <p class="resposta">Por conta das OpenGL Extensions, existem diversas línguagens de shaders suportadas pela API, sendo a GLSL e a SPIR-V apoiadas diretamente pelo OpenGL sem o uso de extensões. A GLSL (OpenGL Shading Language) é a principal linguagem de shaders para o OpenGL, e é uma linguagem aos moldes de C.<sup>4</sup></p>
+
+            <p>Segue um exemplo de código que renderiza um qudrado na tela. O código foi retirado do <a href="https://www.inf.pucrs.br/~manssour/OpenGL/Tutorial.html" target="_blank">tutorial da PUCRS</a>.<sup>1</sup></p>
+
+            <div class="dFlex">
+                <pre>
+// Quadrado.c - Isabel H. Manssour
+// Um programa OpenGL simples que desenha um 
+// quadrado em  uma janela GLUT.
+// Este código está baseado no GLRect.c, exemplo 
+// disponível no livro "OpenGL SuperBible", 
+// 2nd Edition, de Richard S. e Wright Jr.
+
+#include <windows.h>
+#include <gl/glut.h>
+
+// Função callback chamada para fazer o desenho
+void Desenha(void)
+{
+     glMatrixMode(GL_MODELVIEW);
+     glLoadIdentity();
+                   
+     // Limpa a janela de visualização com a cor de fundo especificada
+     glClear(GL_COLOR_BUFFER_BIT);
+
+     // Especifica que a cor corrente é vermelha
+     //         R     G     B
+     glColor3f(1.0f, 0.0f, 0.0f);
+
+     // Desenha um quadrado preenchido com a cor corrente
+     glBegin(GL_QUADS);
+               glVertex2i(100,150);
+               glVertex2i(100,100);
+               // Especifica que a cor corrente é azul
+               glColor3f(0.0f, 0.0f, 1.0f);
+               glVertex2i(150,100);
+               glVertex2i(150,150);               
+     glEnd();
+
+     // Executa os comandos OpenGL
+     glFlush();
+}
+
+// Inicializa parâmetros de rendering
+void Inicializa (void)
+{   
+    // Define a cor de fundo da janela de visualização como preta
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+// Função callback chamada quando o tamanho da janela é alterado 
+void AlteraTamanhoJanela(GLsizei w, GLsizei h)
+{
+    // Evita a divisao por zero
+    if(h == 0) h = 1;
+            
+    // Especifica as dimensões da Viewport
+    glViewport(0, 0, w, h);
+
+    // Inicializa o sistema de coordenadas
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    // Estabelece a janela de seleção (left, right, bottom, top)
+    if (w <= h) 
+            gluOrtho2D (0.0f, 250.0f, 0.0f, 250.0f*h/w);
+    else 
+            gluOrtho2D (0.0f, 250.0f*w/h, 0.0f, 250.0f);
+}
+
+// Programa Principal 
+int main(void)
+{
+     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+     glutInitWindowSize(400,350);
+     glutInitWindowPosition(10,10);
+     glutCreateWindow("Quadrado");
+     glutDisplayFunc(Desenha);
+     glutReshapeFunc(AlteraTamanhoJanela);
+     Inicializa();
+     glutMainLoop();
+}
+                </pre>
+            
+
+                <img src="quadrado.webp" alt="Quadrado gerado com OpenGL">
+            </div>
+
+            <p>Segue trecho de código e output de utilização de GLSL para shaders. O código foi retirado do <a href="https://github.com/ssloy/glsltuto/blob/master/README.md" target="_blank">github</a><sup>5</sup> e tem o processo detalhado no README.</p>
+
+                <pre>
+#version 120
+
+uniform vec4 viewport;
+attribute float R;
+
+varying mat4 VPMTInverse;
+varying mat4 VPInverse;
+varying vec3 centernormclip;
+
+void main() {
+    gl_Position   = gl_ModelViewProjectionMatrix * gl_Vertex;
+    gl_FrontColor = gl_Color;
+
+    mat4 T = mat4(
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            gl_Vertex.x/R, gl_Vertex.y/R, gl_Vertex.z/R, 1.0/R);
+
+    mat4 PMTt = transpose(gl_ModelViewProjectionMatrix * T);
+
+    vec4 r1 = PMTt[0];
+    vec4 r2 = PMTt[1];
+    vec4 r4 = PMTt[3];
+    float r1Dr4T = dot(r1.xyz,r4.xyz)-r1.w*r4.w;
+    float r1Dr1T = dot(r1.xyz,r1.xyz)-r1.w*r1.w;
+    float r4Dr4T = dot(r4.xyz,r4.xyz)-r4.w*r4.w;
+    float r2Dr2T = dot(r2.xyz,r2.xyz)-r2.w*r2.w;
+    float r2Dr4T = dot(r2.xyz,r4.xyz)-r2.w*r4.w;
+
+    gl_Position = vec4(-r1Dr4T, -r2Dr4T, gl_Position.z/gl_Position.w*(-r4Dr4T), -r4Dr4T);
+
+
+    float discriminant_x = r1Dr4T*r1Dr4T-r4Dr4T*r1Dr1T;
+    float discriminant_y = r2Dr4T*r2Dr4T-r4Dr4T*r2Dr2T;
+    float screen = max(float(viewport.z), float(viewport.w));
+
+    gl_PointSize = sqrt(max(discriminant_x, discriminant_y))*screen/(-r4Dr4T);
+
+
+    // prepare varyings
+
+    mat4 TInverse = mat4(
+            1.0,          0.0,          0.0,         0.0,
+            0.0,          1.0,          0.0,         0.0,
+            0.0,          0.0,          1.0,         0.0,
+            -gl_Vertex.x, -gl_Vertex.y, -gl_Vertex.z, R);
+    mat4 VInverse = mat4( // TODO: move this one to CPU
+            2.0/float(viewport.z), 0.0, 0.0, 0.0,
+            0.0, 2.0/float(viewport.w), 0.0, 0.0,
+            0.0, 0.0,                   2.0/gl_DepthRange.diff, 0.0,
+            -float(viewport.z+2.0*viewport.x)/float(viewport.z), -float(viewport.w+2.0*viewport.y)/float(viewport.w),
+            -(gl_DepthRange.near+gl_DepthRange.far)/gl_DepthRange.diff, 1.0);
+    VPMTInverse = TInverse*gl_ModelViewProjectionMatrixInverse*VInverse;
+    VPInverse = gl_ProjectionMatrixInverse*VInverse; // TODO: move to CPU
+    vec4 centerclip = gl_ModelViewMatrix*gl_Vertex;
+    centernormclip = vec3(centerclip)/centerclip.w;
+}
+
+                </pre>
+
+                <img src="shader.png" alt="">
+
+                <p class="resposta">As aplicações OpenGL variam de ferramentas CAD a programas de modelagem usados para criar personagens para o cinema, tal como um dinossauro. Além do desenho de primitivas gráficas, tais como linhas e polígonos, OpenGL dá suporte a iluminação, colorização, mapeamento de textura, transparência, animação, entre muitos outros efeitos especiais.<sup>1</sup> Além disso, jogos digitais também utilizam esta API. Segue uma lista de alguns jogos populares que são renderizados com OpenGL: <sup>6</sup></p>
+                <ul>
+                    <li>Age of Empires III</li>
+                    <li>Alien: Isolation</li>
+                    <li>Angry Birds</li>
+                    <li>Assassin's Creed II</li>
+                    <li>Batman: Arkham Asylum</li>
+                </ul>
+
+            
+
+            <h3>Referências</h3>
+            <ol>
+                <li>Tutorial da PUCRS "Introdução à OpenGL" - <a href="https://www.inf.pucrs.br/~manssour/OpenGL/Tutorial.html" target="_blank">https://www.inf.pucrs.br/~manssour/OpenGL/Tutorial.html</a></li>
+                <li>Texto do TecMundo "O que é OpenGL?" - <a href="https://www.tecmundo.com.br/video-game/872-o-que-e-opengl-.htm" target="_blank">https://www.tecmundo.com.br/video-game/872-o-que-e-opengl-.htm</a></li>
+                <li>Documentação "Rendering Pipeline Overview" - <a href="https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview" target="_blank">https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview</a></li>
+                <li>Documentação "OpenGL Shading Language" - <a href="https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language#:~:text=The%20OpenGL%20Shading%20Language%20(GLSL,is%20a%20C%2Dstyle%20language." target="_blank">https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language#:~:text=The%20OpenGL%20Shading%20Language%20(GLSL,is%20a%20C%2Dstyle%20language.</a></li>
+                <li>GitHub com código do GLSL (Linguagem do shader) - <a href="https://github.com/ssloy/glsltuto" target="_blank">https://github.com/ssloy/glsltuto</a></li>
+                <li>Lista de jogos que usam OpenGL - <a href="https://www.pcgamingwiki.com/wiki/List_of_OpenGL_games" target="_blank">https://www.pcgamingwiki.com/wiki/List_of_OpenGL_games</a></li>
+            </ol>
         </section>
 
     </main>

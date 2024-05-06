@@ -38,3 +38,13 @@ h2{
 main > section:last-child{
     min-height: 100vh;
 }
+
+.dFlex{
+    display: flex;
+    align-items: center;
+    justify-content:stretch;
+}
+
+li{
+    margin-bottom: 0.6em;
+}
