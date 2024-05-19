@@ -26,6 +26,8 @@
                 <li><a href="#atvd6">Atividade 6 (GitHub Classroom - AP3)</a></li>
                 <li><a href="#atvd7">Atividade 7 (GitHub Classroom - AP4)</a></li>
                 <li><a href="#atvd8">Atividade 8 (APIs gráficas)</a></li>
+                <li><a href="#atvd9">Atividade 9 (Transformações)</a></li>
+                <li><a href="#atvd10">Atividade 10 (NPR)</a></li>
             </ol>
         </nav>
     </header>
@@ -364,6 +366,55 @@ void main() {
                 <li>Lista de jogos que usam OpenGL - <a href="https://www.pcgamingwiki.com/wiki/List_of_OpenGL_games" target="_blank">https://www.pcgamingwiki.com/wiki/List_of_OpenGL_games</a></li>
             </ol>
         </section>
+
+
+        <section id="atvd9">
+            <h2 class="tituloAtvd">Atividade 9 (Transformações)</h2>
+            <a href="#indice">Índice de atividades</a>
+
+            <p class="resposta">Para criar o cubo, é necessário criar 6 faces qudradas, e para isso, 12 triângulos. Então, é necessário definir os índices. O número de índices é 36, pois são 3 índices por triângulo.<sup>2</sup></p>
+            
+            <p class="resposta">Após isso, o OpenGL buffer é criado, vinculado, preenchido e configurado com as funções padrões (glGenBuffers, glBindBuffer, glBufferData, glVertexAttribPointer), lembrando de passar o número correto de índices (36) que serão desenhados.</p>
+            
+            <p class="resposta">Para as cores, é necessário adicionar um atributo. Inicialmente é gerado um array com um RBG por índice. Após isso, o buffer é criado, vinculado, preenchido e configurado igual ao citado anteriormente, e agora o vertex shader tem acesso a esse buffer novo. Após isso basta declarar novamente o fragmentColor no fragment shader.</p>
+            
+            <p class="resposta">Ao fazer apenas isso, o cubo pode parecer estranho, pois a profundidade não foi salva no z-buffer. É possível fazer com que o hardware resolva isso com apenas três comandos ( glEnable(GL_DEPTH_TEST); glDepthFunc(GL_LESS); glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); ). Com isso, o cubo deve aparecer na tela.</p>
+            
+            <p class="resposta">Para realizar a rotação do cubo, é necessário realizar a multiplicação Projection * Translate * Rotate. Os valores de Projection e Translate são constantes, portanto, podem ser definidos fora do loop. A translação é levada para o fundo em 5 unidades<sup>1</sup>.</p>
+            
+            <p class="resposta">Na hora de desenhar, uma matriz model é feita com base na matriz identidade, pois ela é o produto de rotate com a matriz indentidade. Este produto pode ser realizado até 3 vezes por loop, pois é uma multiplicação por eixo (X, Y, Z). Por último, basta multiplicar model por projection e enviar para o shader.</p>
+            
+            <p class="resposta">Sabendo disso, é necessário realizar as seguintes alterações no código dado:</p>
+            <ol>
+                <li>Ajustar o array "vertices" para que contenha 36 vertices (totalizando 12 triangulos)</li>
+                <li>Ajustar o array "colors" para os vertices novos</li>
+                <li>Criar as constantes "projection e translate" (ainda fora do loop)</li>
+                <li>Dentro do loop, atualizar a matriz model</li>
+                <li>Atualizar a matriz MVP</li>
+                <li>Utilizar as funções que corrigem a profundidade (z-buffer) automaticamente</li>
+            </ol>
+
+            <h3>Referências</h3>
+            <ol>
+                <li>Vídeo "Vídeo 16: OpenGL Moderno - Desenhando o Cubo(único buffer)" - <a href="https://www.youtube.com/watch?v=o8Nb3HR4n9c" target="_blank">https://www.youtube.com/watch?v=o8Nb3HR4n9c</a></li>
+
+                <li>Tutorial da opengl "Tutorial 4 : A Colored Cube" - <a href="https://www.opengl-tutorial.org/beginners-tutorials/tutorial-4-a-colored-cube/" target="_blank">https://www.opengl-tutorial.org/beginners-tutorials/tutorial-4-a-colored-cube/</a></li>
+            </ol>
+        </section>
+
+
+        <section id="atvd10">
+            <h2 class="tituloAtvd">Atividade 10 (NPR)</h2>
+            <a href="#indice">Índice de atividades</a>
+
+            <p class="resposta"></p>
+
+          <!--  <h3>Referências</h3>
+            <ol>
+                <li>ref - <a href="#">link</a></li>
+            </ol> -->
+        </section>
+
 
     </main>
     
