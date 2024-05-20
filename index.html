@@ -407,12 +407,44 @@ void main() {
             <h2 class="tituloAtvd">Atividade 10 (NPR)</h2>
             <a href="#indice">Índice de atividades</a>
 
-            <p class="resposta"></p>
+            <p class="resposta">NPR, ou nonphotorealistic rendering (renderização não fotorrealista), é realizada quando o intuito é de produzir imagens que não se parecem com o mundo real. Este tipo de renderização pode ser feito para que a cor de um objeto represente sua temperatura, ou criar uma imagem de um desenho animado. Um exemplo comum de NPR é o toon shading, que é uma técnica de renderização que sombreia (shades) objetos com cores constantes e bem delineadas, e gera imagens no estilo cartoon, ao invés de fotorrealista.<sup>1</sup> Abaixo seguem duas imagens mostrando a diferença visual entre Toon Shading, e um shading padrão, com reflexões difusas e especulares.</p>
 
-          <!--  <h3>Referências</h3>
+            <img class="img-centro" src="rayGuns.jpg" alt="Imagem cim duas armas de raio. Uma com visual realista, outra com visual de desenho">
+
+            <p class="resposta">Para alcançar o efeito (catoon) acima, a arma é sombreada com apenas três tons: um para regiões difusas brilhantes, outro para regiões difusas escuras e um terceiro para realces especulares. Além disso, há um contorno preto. Uma possibilidade presente ao usar shaders como esse é "transformar" modelos 3d em 2d, pois como o sombreamento não é fotorrealista, a noção de profundidade pode ser alterada, fazendo com que pareça um desenho 2d.</p>
+
+            <p class="resposta">Como exemplificado no parágrafo anterior, para realizar um toon shading é necessário reduzir as variações no sombreamento. Um toon shader deve ter estes três componentes essenciais:</p>
             <ol>
-                <li>ref - <a href="#">link</a></li>
-            </ol> -->
+                <li>O sombreamento difuso deve se ser representado por apenas dois valores: um para regiões claras, e outro para regiões escuras</li>
+                <li>Realces especulares precisam ser identificados e representados por uma cor, na qual suas intensidades são suficientemente grandes.</li>
+                <li>Objetos precisam ser completamente contornados para que se pareçam com um desenho</li>
+            </ol>
+
+            <p class="resposta">Um toon shader precisa converter as reflexões difusas de muitos tons de cor em poucos. Como exemplo, pense em uma escala de cor (monocromatica) para cada pixel que vai de 0,0 até 1,0. Uma forma de criar um toon shader é dividir esta escala em duas faixas distintas; por exemplo, pixels com valores entre 0,0 e 0,5 assumiriam o valor 0,2, enquanto o restante assumiria valor 1,0. O resultado seria uma imagem em dois tons, com uma aparência mais cartunesca. Em termos matemáticos, é necessário transformar a função continua que representa os tons em uma função passo (step function). Caso queira, é possível adicionar mais faixas/passos/steps.</p>
+
+            <p>Baseando-se nisso, o shader faz com que na parte de relfexão difusa N⋅L o resultado seja classificado como claro ou escuro (isso com limites simples, com apenas duas faixas). Para mapear os valores de N⋅L de um intervalo contínuo para uma função de degrau, basta usar uma texture lookup, usando uma textura 1d para aplicar a função passo.</p>
+
+            <p>Para lidar com realces especulares basta fazer a mesma coisa, aplicar uma função passo para que ao invés de existir uma variação gradual na força, cada realce simplesmente continuará exististindo ou sumirá completamente.</p>
+
+            <p>Por último, é necessário adicionar contorno nos objetos. Para isso, é preciso achar os pixels nas silhuetas do objetos. Uma forma simples de fazer isto é usando N⋅V como medida, uma vez que N⋅V mede o quão visível uma superficie é do ponto de vista atual. Um ponto no qual N⋅V é próximo de 0 representa a transição de visível para não visível, portanto são pontos na (ou próximos a) silhueta do objeto. Mais uma vez, uma textura 1d aplica a função passo.</p>
+
+            <h3>Outras técnicas de shading</h3>
+
+            <p>Outras duas formas de shading são o gouraud e o phong shading, que assim como o toon shading, são usadas para calcular a iluminação e aparência das superfícies em gráficos 3d, são frequemente usadas em renderização em tempo real, e usam as normais das superfícies para calcular a iluminação. Porém, diferente do toon, essas duas técnicas não são NPR, ou seja, elas visam o fotorrealismo.</p>
+
+            <p>Como já explicado, o toon shading "simplifica" o processo de de iluminação/sombreamento, criando imagens cartunizadas. Já no Gouraud shading, a iluminação é calculada apenas nos vértices dos modelos, e o restante das cores são criadas através da interpolação; isso gera imagens fotorrealistas com um custo computacional não tão alto.<sup>2</sup> Já no phong shading, a iluminação é calculada em cada pixel; isso gera imagens extremamente fotorrealistas, porém requer mais recursos para processamento.<sup>3</sup> Segue imagens comparativas destas técnicas.<sup>4</sup></p>
+
+            <img src="shadingMethods.jpg" alt="A imagem de um mesmo modelo de maça sob 3 diferente shaders" class="img-centro img-size">
+
+
+
+            <h3>Referências</h3>
+            <ol>
+                <li>Trecho do capítulo 9 do livro "The Cg Tutorial" da Nvidia - <a href="https://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter09.html" target="_blank">https://developer.download.nvidia.com/CgTutorial/cg_tutorial_chapter09.html</a></li>
+                <li>Tutorial da geeksforgeeks "Gouraud Shading in Computer Graphics" - <a href="https://www.geeksforgeeks.org/gouraud-shading-in-computer-graphics/" target="_blank">https://www.geeksforgeeks.org/gouraud-shading-in-computer-graphics/</a></li>
+                <li>Tutorial da geeksforgeeks "Phong Shading Computer Graphics" - <a href="https://www.geeksforgeeks.org/phong-shading-computer-graphics/" target="_blank">https://www.geeksforgeeks.org/phong-shading-computer-graphics/</a></li>
+                <li>Vídeo "Phong, Gouraud, Flat, and Toon shading in OpenGL" - <a href="https://www.youtube.com/watch?app=desktop&v=dHfu3VkoZ5U" target="_blank">https://www.youtube.com/watch?app=desktop&v=dHfu3VkoZ5U</a></li>
+            </ol>
         </section>
 
 

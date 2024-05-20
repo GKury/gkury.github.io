@@ -48,3 +48,14 @@ main > section:last-child{
 li{
     margin-bottom: 0.6em;
 }
+
+.img-centro{
+    display: block;
+    margin: auto;
+    padding: 1.4em 0;
+}
+
+.img-size{
+    max-width: 100%;
+    height: auto;
+}
